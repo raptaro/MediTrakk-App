@@ -1,0 +1,54 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Django
+*.sqlite3
+db.sqlite3
+/media/
+/staticfiles/
+/templates/__pycache__/
+
+# Tailwind and npm
+node_modules/
+tailwind.config.js
+postcss.config.js
+package-lock.json
+yarn.lock
+
+# Environment Variables
+.env
+/venv
+
+# Build Files
+/dist/
+/build/
+/static/css/
+/static/js/
+/static/assets/
+
+# OS-Specific
+.DS_Store
+Thumbs.db
+
+# IDE/Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and Debugging
+*.log
+*.pot
+*.mo
+
+# Pipenv (Optional)
+Pipfile.lock
+
+# Coverage Reports
+htmlcov/
+*.cover
+*.coverage
+.cache/
+/venv

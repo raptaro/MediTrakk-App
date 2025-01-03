@@ -1,0 +1,38 @@
+    {% load static %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Base Layout</title>
+        <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <h1>Logo</h1>
+                <ul>
+                    <a href="#">Dashboard</a>
+                    <a href="{% url 'schedule_appointment'%}">Patients</a>
+                    <a href="{% url 'register_patient' %}">Registration</a>
+                    <a href="{% url 'patient_list'%}">Electronic Medical Records</a>
+                    <a href="{% url 'appointment_list'%}">Appointments</a>
+                    <a href="{% url 'registration_queueing'%}">Queueing</a>
+                    <a href="{% url 'treatment_queue'%}">Treatment</a>
+                    <a href="#">Patient Portal</a>
+                    <a href="#">Medicine Inventory</a>
+                    <a href="#">Reports</a>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content">
+                {% include 'navbar.html' %}
+                <div class="content-body">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>

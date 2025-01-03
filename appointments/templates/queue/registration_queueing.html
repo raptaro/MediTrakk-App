@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Container for both queues */
+    .queue-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    /* Common styles for each queue section */
+    .queue-section {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        flex-basis: 48%; /* Take up half of the container */
+    }
+
+    .queue-section h3 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    /* Highlight the current patient */
+    .queue-section.current {
+        background-color: #e8f8e8;
+        border-color: #28a745;
+    }
+
+    .queue-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .queue-section ul li {
+        margin-bottom: 5px;
+    }
+
+    .btn {
+        margin-top: 10px;
+    }
+
+    /* Optional styling for header */
+    h2 {
+        text-align: center;
+    }
+
+</style>
+
+<h2>Registration Queue</h2>
+
+<div class="queue-container">
+    <!-- Regular Queue Section -->
+    <div class="queue-section">
+        <h3>Regular Queue</h3>
+        <hr>
+        {% if regular_current %}
+            <div class="queue-section current">
+                <h3>Current Patient</h3>
+                <p><strong>{{ regular_current.patient.first_name }} {{ regular_current.patient.last_name }}</strong></p>
+                <p>Priority Level: {{ regular_current.priority_level }}</p>
+                <form method="post" action="{% url 'accept_patient' regular_current.patient.patient_id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Accept</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="queue-section">
+                <p><em>No patients currently in the queue.</em></p>
+            </div>
+        {% endif %}
+
+        <!-- Display Upcoming Regular Patients -->
+        {% if regular_next1 or regular_next2 %}
+            <div class="queue-section">
+                <h3>Upcoming Patients</h3>
+                <ul>
+                    {% if regular_next1 %}
+                        <li><strong>{{ regular_next1.patient.first_name }} {{ regular_next1.patient.last_name }}</strong> (Priority: {{ regular_next1.priority_level }})</li>
+                    {% endif %}
+                    {% if regular_next2 %}
+                        <li><strong>{{ regular_next2.patient.first_name }} {{ regular_next2.patient.last_name }}</strong> (Priority: {{ regular_next2.priority_level }})</li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Priority Queue Section -->
+    <div class="queue-section">
+        <h3>Priority Queue</h3>
+        <hr>
+        {% if priority_current %}
+            <div class="queue-section current">
+                <h3>Current Patient</h3>
+                <p><strong>{{ priority_current.patient.first_name }} {{ priority_current.patient.last_name }}</strong></p>
+                <p>Priority Level: {{ priority_current.priority_level }}</p>
+                <form method="post" action="{% url 'accept_patient' priority_current.patient.patient_id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Accept</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="queue-section">
+                <p><em>No patients currently in the queue.</em></p>
+            </div>
+        {% endif %}
+
+        <!-- Display Upcoming Priority Patients -->
+        {% if priority_next1 or priority_next2 %}
+            <div class="queue-section">
+                <h3>Upcoming Patients</h3>
+                <ul>
+                    {% if priority_next1 %}
+                        <li><strong>{{ priority_next1.patient.first_name }} {{ priority_next1.patient.last_name }}</strong> (Priority: {{ priority_next1.priority_level }})</li>
+                    {% endif %}
+                    {% if priority_next2 %}
+                        <li><strong>{{ priority_next2.patient.first_name }} {{ priority_next2.patient.last_name }}</strong> (Priority: {{ priority_next2.priority_level }})</li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

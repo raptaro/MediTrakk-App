@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Patients</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content%}
+    <style>
+        li {
+            list-style: none;
+        }
+    </style>
+    
     <h1>Patients</h1>
     <ul>
         {% for patient in patients %}
         <li>{{ patient.first_name }} {{ patient.last_name }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock content%}
