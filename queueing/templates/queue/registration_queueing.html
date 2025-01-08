@@ -2,54 +2,84 @@
 
 {% block content %}
 <style>
-    /* Container for both queues */
+/* Container for the queues */
+.queue-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    margin-top: 5%;
+}
+
+/* Common styling for queue sections */
+.queue-section {
+    flex-grow: 1; /* Allow sections to grow if needed */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 300px; /* Minimum width to avoid shrinking too small */
+}
+
+/* Title styling for each queue section */
+.queue-section h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+/* Current patient section styling */
+.queue-section.current {
+    border: 2px solid #007bff;
+    background-color: #e9f5ff;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for upcoming patients list */
+.queue-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.queue-section ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
     .queue-container {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
+        flex-direction: column;
     }
 
-    /* Common styles for each queue section */
     .queue-section {
-        margin-bottom: 20px;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-        flex-basis: 48%; /* Take up half of the container */
+        min-width: 100%; /* Make sections take the full width on small screens */
     }
+}
 
-    .queue-section h3 {
-        margin-bottom: 10px;
-        color: #333;
-    }
-
-    /* Highlight the current patient */
-    .queue-section.current {
-        background-color: #e8f8e8;
-        border-color: #28a745;
-    }
-
-    .queue-section ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .queue-section ul li {
-        margin-bottom: 5px;
-    }
-
-    .btn {
-        margin-top: 10px;
-    }
-
-    /* Optional styling for header */
-    h2 {
-        text-align: center;
-    }
 
 </style>
-
 <h2>Registration Queue</h2>
 
 <div class="queue-container">
@@ -62,7 +92,7 @@
                 <h3>Current Patient</h3>
                 <p><strong>{{ regular_current.patient.first_name }} {{ regular_current.patient.last_name }}</strong></p>
                 <p>Priority Level: {{ regular_current.priority_level }}</p>
-                <form method="post" action="{% url 'accept_patient' regular_current.patient.patient_id %}">
+                <form method="post" action="{% url 'queueing:accept_patient' regular_current.patient.patient_id %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Accept</button>
                 </form>
@@ -98,7 +128,7 @@
                 <h3>Current Patient</h3>
                 <p><strong>{{ priority_current.patient.first_name }} {{ priority_current.patient.last_name }}</strong></p>
                 <p>Priority Level: {{ priority_current.priority_level }}</p>
-                <form method="post" action="{% url 'accept_patient' priority_current.patient.patient_id %}">
+                <form method="post" action="{% url 'queueing:accept_patient' priority_current.patient.patient_id %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Accept</button>
                 </form>

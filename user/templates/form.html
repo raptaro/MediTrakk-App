@@ -7,22 +7,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediTrakk</title>
-
-  <script src="https://kit.fontawesome.com/c9fdc5e2e7.js" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/flowbite@1.x.x/dist/flowbite.min.css" rel="stylesheet" />
+  <title>Telehealth</title>
   <link rel="stylesheet" href="{% static 'styles/output.css' %}">
-
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@1.x.x/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 
-<body>
-  <div class="flex h-screen bg-gray-50 dark:bg-gray-800">
-    {% include 'navbar.html' %}
-    {% include 'sidebar.html' %}
+<body class="flex justify-center bg-gray-100 pt-32">
+  <div class="w-full max-w-sm rounded-lg border border-gray-200 bg-white p-4 shadow">
     {% block content %}
     {% endblock content %}
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 

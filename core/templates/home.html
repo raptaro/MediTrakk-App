@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="ml-64 flex-1">
+  <div class="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+    <!--p tags to move the content cause the fixed navbar won't allow me to use margin top-->
+    <p class="mt-4 p-4 text-gray-700 dark:text-gray-300"></p>
+    <p class="text-2xl font-bold">
+      Good Day, <span class="text-blue-500">{{request.user.username}}</span>
+    </p>
+    <p>Check out the latest updates from the past 7 days!</p>
+  </div>
+
+  <!-- cards -->
+  <div class="flex flex-row gap-4 p-4">
+    <a href="#" class="card">
+
+      <p class="card-title">Total Patient</p>
+      <p class="card-content">84</p>
+      <p class="card-note">
+        <span class="text-red-500">↓ -17.65%</span> Since last week
+      </p>
+    </a>
+
+    <a href="#" class="card">
+
+      <p class="card-title">Today's Appointment</p>
+      <p class="card-content">4</p>
+      <p class="card-note">
+        Next Appointment - <span class="text-blue-500">10:00 AM</span>
+      </p>
+    </a>
+
+    <a href="#" class="card">
+
+      <p class="card-title">Patient Request</p>
+      <p class="card-content">10</p>
+      <p class="card-note">
+        <span class="text-blue-500">+2</span> Appointment
+      </p>
+    </a>
+
+    <a href="#" class="card">
+
+      <p class="card-title">Inventory Updates</p>
+      <p class="card-content">84</p>
+      <p class="card-note">
+        <span class="text-red-500">↓ -17.65%</span> Since last week
+      </p>
+    </a>
+
+  </div>
+
+</main>
+{% endblock content %}

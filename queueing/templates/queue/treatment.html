@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block content %}     
+<style>
+/* Container for both queues */
+.queue-container {
+    display: flex;
+    justify-content: space-between; /* Places one section on the left and the other on the right */
+    align-items: flex-start;       /* Aligns sections to the top */
+    gap: 40px;                     /* Space between the sections */
+    margin: 5% auto 0;             /* Top margin and center horizontally */
+    width: auto;                   /* Auto-adjust based on content width */
+    max-width: 1200px;             /* Prevents the container from becoming too wide */
+}
+
+/* Styling for each section */
+.queue-section {
+    flex-grow: 1;                  /* Allows sections to expand equally */
+    max-width: 48%;                /* Limits each section to half the container width */
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+table tr:hover {
+    background-color: #e3f2e1;
+}
+
+/* Header styling */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #444;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .queue-container {
+        flex-direction: column; /* Stacks sections vertically */
+        align-items: center;   /* Centers content */
+    }
+
+    .queue-section {
+        max-width: 100%;      /* Full width for each section */
+    }
+}
+
+</style>
+
+<h2>Treatment Queue</h2>
+
+<div class="queue-container">
+    <!-- Regular Queue Section -->
+    <div class="queue-section">
+        <h3>Regular Queue</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Priority</th>
+                    <th>Arrival Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in regular_treatment_queue %}
+                <tr>
+                    <td>{{ entry.patient.first_name }} {{ entry.patient.last_name }}</td>
+                    <td>{{ entry.priority_level }}</td>
+                    <td>{{ entry.created_at }}</td>
+                    <td>
+                        <a href="{% url 'queueing:complete_treatment' entry.patient.patient_id %}">Done</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Priority Queue Section -->
+    <div class="queue-section">
+        <h3>Priority Queue</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Priority</th>
+                    <th>Arrival Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in priority_treatment_queue %}
+                <tr>
+                    <td>{{ entry.patient.first_name }} {{ entry.patient.last_name }}</td>
+                    <td>{{ entry.priority_level }}</td>
+                    <td>{{ entry.created_at }}</td>
+                    <td>
+                        <a href="{% url 'queueing:complete_treatment' entry.patient.patient_id %}">Done</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

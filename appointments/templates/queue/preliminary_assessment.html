@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}  
-  <h2>Preliminary Assessment for {{ patient.first_name }} {{ patient.last_name }}</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit Assessment</button>
-  </form>
-{% endblock content %}

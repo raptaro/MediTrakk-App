@@ -1,0 +1,31 @@
+{% extends "form.html" %}
+
+{% block content %}
+<form class="space-y-6" method="post" action="{% url 'register' %}">
+  {% csrf_token %}
+  <h1 class="text-xl font-medium text-gray-900">Sign in to our platform</h1>
+  <div>
+    <label for="username" class="mb-2 block text-sm font-medium text-gray-900">Username</label>
+    <input type="text" name="username" id="username"
+      class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900" required autofocus />
+  </div>
+  <div>
+    <label for="password" class="mb-2 block text-sm font-medium text-gray-900">Password</label>
+    <input type="password" name="password" id="password" placeholder="••••••••"
+      class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900" required />
+  </div>
+  <div>
+    <label for="confirmation" class="mb-2 block text-sm font-medium text-gray-900">Confirmation</label>
+    <input type="password" name="confirmation" id="confirmation" placeholder="••••••••"
+      class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900" required />
+  </div>
+  <button type="submit"
+    class="w-full rounded-lg bg-sky-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-4 focus:ring-sky-300">
+    Register
+  </button>
+  <div class="text-sm font-medium text-gray-500">
+    Have an account?
+    <a href="{% url 'login' %}" class="text-sky-700 hover:underline">Login</a>
+  </div>
+</form>
+{% endblock content %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="relative mt-10 p-4" style="left: 17%; width: 80%;">  <!-- Retained positioning div -->
+  <div class="patient-list-container mt-4">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold">Patient List</h2>
+      <p class="text-sm text-gray-600">Check out the latest updates from the past 7 days!</p>
+    </div>
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <span class="text-gray-600">All Patients</span>
+      </div>
+      <div class="flex space-x-4">
+        <input type="text" placeholder="Search anything here..." class="border border-gray-300 rounded px-3 py-2" id="search-input">
+        <select id="filter-select" class="border border-gray-300 rounded px-3 py-2">
+          <option value="">Select Filter</option>
+          <option value="Waiting">Waiting</option>
+          <option value="Being Assessed">Being Assessed</option>
+          <option value="Queued for Treatment">Queued for Treatment</option>
+          <option value="Completed">Completed</option>
+          <option value="All">All</option>
+        </select>
+      </div>
+    </div>
+    <div class="patient-list-table-wrapper overflow-x-auto">
+      <table class="patient-list-table w-full table-auto divide-y divide-gray-200">
+        <thead>
+          <tr>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><input type="checkbox" class="cursor-pointer" id="select-all"></th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient ID </th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient Name</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created Date</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Complaint</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200" id="patient-table-body">
+          {% for patient in patients %}
+            <tr>
+              <tr>
+                <td class="px-4 py-4 whitespace-nowrap"><input type="checkbox" class="cursor-pointer"></td>
+                <td class="px-4 py-4 whitespace-nowrap">{{ forloop.counter }}</td>
+                <td class="px-4 py-4 whitespace-nowrap">{{ patient.patient_id }}</td>
+                <td class="px-4 py-4 whitespace-nowrap">{{ patient.first_name }} {{patient.middle_name}}. {{ patient.last_name }}</td>
+                <td class="px-4 py-4 whitespace-nowrap">{{ patient.get_age }}</td>
+                <td class="px-4 py-4 whitespace-nowrap">{{ patient.temporarystoragequeue.created_at|date:"j F Y" }}</td>
+                <td class="px-4 py-4 whitespace-nowrap">{{ patient.temporarystoragequeue.created_at|time:"h:i a" }}</td>
+                <td class="px-4 py-4 whitespace-nowrap">{{ patient.get_complaint }}</td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                  {% if patient.temporarystoragequeue %}
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium capitalize">
+                      {% if patient.temporarystoragequeue.status == 'Completed' %}
+                        <span style="background-color: #D8FFFA; color: #00B09C;">Success</span> 
+                      {% else %}
+                        <span style="background-color: #FFF4DF; color: #FFA600;">Pending</span> 
+                      {% endif %}
+                    </span>
+                  {% else %}
+                    <span style="background-color: #D3D3D3; color: #000000;">Not in Queue</span> 
+                  {% endif %}
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                  <div class="flex space-x-2">
+                    <form method="POST" action="{% url 'patient:patient_view' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="patient_id" value="{{ patient.patient_id }}">
+                      <button type="submit" class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-1 px-2 rounded">
+                          <i class="fas fa-eye"></i>
+                      </button>
+                    </form>
+                      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"><i class="fas fa-edit"></i></button>
+                      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tr>
+
+          {% endfor %}
+          {% if not patients %}
+            <tr>
+              <td colspan="10" class="text-center text-gray-500 py-4">No patients found.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock content %}

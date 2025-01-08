@@ -1,0 +1,38 @@
+{% extends "form.html" %}
+
+{% block content %}
+<form class="space-y-6" method="POST" action="{% url 'login' %}">
+  {% csrf_token %}
+  <h1 class="text-xl font-medium text-gray-900">Log in to our platform</h1>
+
+  <div>
+    <label for="username" class="mb-2 block text-sm font-medium text-gray-900">Username</label>
+    <input type="text" name="username" id="username" required autofocus
+      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-sky-500 focus:ring-sky-500" />
+  </div>
+
+  <div>
+    <label for="password" class="mb-2 block text-sm font-medium text-gray-900">Password</label>
+    <input type="password" name="password" id="password" placeholder="••••••••" required
+      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-sky-500 focus:ring-sky-500" />
+  </div>
+
+  <div class="flex items-start">
+    <div class="flex items-center">
+      <input id="remember" type="checkbox" name="remember"
+        class="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-sky-300" />
+      <label for="remember" class="ml-2 text-sm font-medium text-gray-900">Remember me</label>
+    </div>
+    <a href="/" class="ml-auto text-sm text-sky-700 hover:underline">Lost Password?</a>
+  </div>
+
+  <button type="submit"
+    class="w-full rounded-lg bg-sky-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-4 focus:ring-sky-300">
+    Login
+  </button>
+
+  <div class="text-sm font-medium text-gray-500">
+    Not registered? <a href="{% url 'register' %}" class="text-sky-700 hover:underline">Create account</a>
+  </div>
+</form>
+{% endblock content %}

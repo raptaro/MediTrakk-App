@@ -1,0 +1,12 @@
+
+{% block content %}
+    <h1>Patient Details</h1>
+    <p>Full Name: {{patient.first_name}} {{patient.middle_name}}. {{patient.last_name}}</p>
+    <p>Email: {{patient.email}}</p>
+    <p>Phone Number: {{patient.phone_number}}</p>
+    <p>Date of Birth: {{patient.date_of_birth}} | Age: {{patient.get_age}}</p>
+    <p>Address:</p>
+    <p>Street: {{patient.street_address}}</p>
+    <p>Barangay: {{patient.barangay}}</p>
+    <p>City/Municipality: {{patient.municipal_city}}</p>
+{% endblock content %}
